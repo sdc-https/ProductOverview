@@ -1,4 +1,4 @@
-const uuid = require('uuid');
+const seed = require('./seed.js');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost/overview_db', {
@@ -18,10 +18,9 @@ db.once('open', () => {
 });
 
 const sellerSchema = {
-  product_id: String,
   seller_id: {
     type: String,
-    default: uuid.v1
+    unique: true
   },
   discs: Number,
   status: String,
@@ -41,15 +40,6 @@ const inventorySchema = {
   inventory: Number
 };
 
-const productSchema = {
-  product_id: {
-    type: String,
-    unique: true
-  },
-  product_name: String,
-  package_name: String
-}
-
 const shippingSchema = {
   prime: Boolean,
   ships_from: String,
@@ -57,7 +47,12 @@ const shippingSchema = {
 }
 
 const OverviewSchema = {
-  product: productSchema,
+  product_id: {
+    type: String,
+    unique: true
+  },
+  product_name: String,
+  package_name: String,
   price: priceSchema,
   other_sellers: [sellerSchema],
   shipping: shippingSchema,
@@ -65,29 +60,3 @@ const OverviewSchema = {
 }
 
 const Overview = mongoose.model('Overview', OverviewSchema);
-
-// Overview.create({
-//   product_id: '1',
-//   product_name: 'The Lord of the Rings Collection (Theatrical Version)',
-//   package_name: 'Triple Feature Box Set',
-//   other_sellers: [{
-//     product_id: '1',
-//     discs: 30, status: 'Used',
-//     price: 29.99,
-//     form: 'DVD',
-//     release_date: '2019-03-12'
-//   }],
-//   price: {
-//     list_price: 14.97,
-//     price: 8.99
-//   },
-//   shipping: {
-//     prime: true,
-//     ships_from: 'Amazon.com',
-//     sold_by: 'Amazon.com'
-//   },
-//   inventory: {
-//     in_stock: true,
-//     inventory: 25
-//   }
-// });
