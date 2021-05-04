@@ -60,3 +60,22 @@ const OverviewSchema = {
 }
 
 const Overview = mongoose.model('Overview', OverviewSchema);
+
+const save = (sampleData) => {
+  let recordInsert = sampleData.map(record => ({
+    updateOne: {
+      filter: {product_id: record.product_id},
+      update: {$set: record},
+      upsert: true
+    }
+  }));
+  Overview.bulkWrite(recordInsert)
+    .then(() => {
+      console.log('Data has been successfully saved into MongoDB');
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+}
+
+save(seed.sampleData);
