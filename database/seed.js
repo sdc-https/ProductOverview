@@ -5,6 +5,7 @@ const sellerGenerator = () => {
   const num = Math.floor(Math.random() * 20);
   const status = ['Used', 'New'];
   const form = ['DVD', 'Blu-ray', '4K', 'Prime Video']
+  const edition = ['Special Edition', "Collector's Edition", "Limited Collector's Edition", 'Special Extended Version', 'Limited Edition', null];
   let sellers = [];
   for (let i = 0; i < num; i++) {
     let record = {};
@@ -13,7 +14,7 @@ const sellerGenerator = () => {
     record['status'] = status[Math.floor(Math.random() * status.length)];
     record['price']= faker.commerce.price();
     record['form'] = form[Math.floor(Math.random() * form.length)];
-    record['edition'] = faker.commerce.productDescription().slice(0, 7);
+    record['edition'] = edition[Math.floor(Math.random() * edition.length)];
     record['release_date'] = faker.date.past();
     sellers.push(record);
   }
@@ -23,8 +24,8 @@ const sellerGenerator = () => {
 
 const priceGenerator = () => {
   let record = {};
-  record['list_price'] = Math.round(faker.commerce.price()  + 10, 2);
-  record['price'] = Math.round(record['list_price'] - 10 * Math.random(), 2);
+  record['list_price'] = Math.round(faker.commerce.price(), 2);
+  record['price'] = Math.round(record['list_price'] - (record['list_price'] % 10) * Math.random(), 2);
   return record;
 };
 
@@ -60,7 +61,7 @@ const dataGenerator = () => {
     let record = {};
     record['product_id'] = idx.toString();
     record['product_name'] = faker.commerce.productName();
-    record['package_name'] = faker.commerce.productDescription().slice(0, 15);
+    record['package_name'] = faker.commerce.productMaterial();
     record['other_sellers'] = sellerGenerator();
     record['price'] = priceGenerator();
     record['shipping'] = shippingGenerator();
