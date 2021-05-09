@@ -1,17 +1,44 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
-  "license": "",
-  "engines": {
-    "node": ">=6.13.0"
-  },
+  "name": "rpt27-front-end-capstone-productoverview",
+  "version": "1.0.0",
+  "description": "> Amazon Item Page Clone",
+  "main": ".eslintrc.js",
   "scripts": {
+    "react-dev": "webpack --watch",
+    "server-dev": "nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zheng-Yi-Sao/ProductOverview.git"
+  },
+  "keywords": [],
+  "author": "wapu-lab",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zheng-Yi-Sao/ProductOverview/issues"
+  },
+  "homepage": "https://github.com/Zheng-Yi-Sao/ProductOverview#readme",
+  "devDependencies": {
+    "@babel/core": "^7.14.0",
+    "@babel/preset-env": "^7.14.0",
+    "@babel/preset-react": "^7.13.13",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.2.4",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.36.2",
+    "webpack-cli": "^4.6.0"
   },
   "dependencies": {
-  },
-  "devDependencies": {
-    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor"
+    "axios": "^0.21.1",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "faker": "^5.5.3",
+    "jest-enzyme": "^7.1.2",
+    "jquery": "^3.6.0",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.7",
+    "nodemon": "^2.0.7",
+    "uuid": "^8.3.2"
   }
 }

@@ -1,13 +1,12 @@
 # Project Name
 
-> Project description
+> Amazon Item Page Clone
 
 ## Related Projects
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
+  - https://github.com/Zheng-Yi-Sao/ProductGallery
+  - https://github.com/Zheng-Yi-Sao/ProductInformation
+  - https://github.com/Zheng-Yi-Sao/CustomerReviews
 
 ## Table of Contents
 
