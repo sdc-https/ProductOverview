@@ -1,4 +1,6 @@
 const $ = require( "jquery" );
+import OverviewWidget from './components/OverviewWidget.jsx';
+import CartWidget from './components/CartWidget.jsx';
 
 class Overview extends React.Component {
   constructor(props) {
@@ -6,9 +8,12 @@ class Overview extends React.Component {
     this.state = {
       product_name: '',
       package_name: '',
-      other_sellers: [],
       list_price: null,
-      price: null
+      price: null,
+      save: null,
+      save_pct: null,
+      sellers: [],
+      form: []
     }
   }
 
@@ -21,9 +26,12 @@ class Overview extends React.Component {
         this.setState({
           product_name: res.product_name,
           package_name: res.package_name,
-          other_sellers: res.other_sellers,
-          list_price: res.price.price,
-          price: res.price.price
+          list_price: res.price.list_price,
+          price: res.price.price,
+          save: res.price.list_price - res.price.price,
+          save_pct: Math.round((res.price.list_price - res.price.price) / res.price.list_price * 100, 0),
+          sellers: res.other_sellers,
+          form: res.form
         })
       },
       error: (error) => {
@@ -34,24 +42,27 @@ class Overview extends React.Component {
 
   render() {
     return (
-      <div className="overview">
-       <h1>{this.state.product_name}</h1>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-5">
+            <OverviewWidget
+              product_name={this.state.product_name}
+              package_name={this.state.package_name}
+              price={this.state.price}
+              list_price={this.state.list_price}
+              save={this.state.save}
+              save_pct={this.state.save_pct}
+              sellers={this.state.sellers}
+              forms={this.state.form}
+            />
+          </div>
+          <div className="col-md-3">
+            <CartWidget product={this.state.product} />
+          </div>
+        </div>
       </div>
     )
   }
 }
 
 ReactDOM.render(<Overview />, document.getElementById("root"));
-
-// const OverviewSchema = {
-//   product_id: {
-//     type: String,
-//     unique: true
-//   },
-//   product_name: String,
-//   package_name: String,
-//   price: priceSchema,
-//   other_sellers: [sellerSchema],
-//   shipping: shippingSchema,
-//   inventory: inventorySchema
-// }

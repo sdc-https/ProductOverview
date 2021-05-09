@@ -23,13 +23,10 @@ app.get('/overview/:productid', (req, res) => {
         throw id;
       }
       let target = id.slice(1, id.length - 1);
-      console.log(target);
       return db.getRecord(target);
     })
     .then(records => {
-      console.log(records[0].product_name);
       res.send(records[0]);
-      next();
     })
     .catch(error => {
       res.send('An error has occured');

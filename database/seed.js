@@ -3,7 +3,6 @@ const uuid = require('uuid');
 
 const sellerGenerator = () => {
   const num = Math.floor(Math.random() * 20);
-  const status = ['Used', 'New'];
   const form = ['DVD', 'Blu-ray', '4K', 'Prime Video']
   const edition = ['Special Edition', "Collector's Edition", "Limited Collector's Edition", 'Special Extended Version', 'Limited Edition', null];
   let sellers = [];
@@ -11,10 +10,11 @@ const sellerGenerator = () => {
     let record = {};
     record['seller_id'] = uuid.v1();
     record['discs'] = Math.floor(Math.random() * 50);
-    record['status'] = status[Math.floor(Math.random() * status.length)];
     record['price']= faker.commerce.price();
-    record['form'] = form[Math.floor(Math.random() * form.length)];
+    record['newfrom'] = faker.commerce.price();
+    record['usedfrom'] = faker.commerce.price();
     record['edition'] = edition[Math.floor(Math.random() * edition.length)];
+    record['form'] = form[Math.floor(Math.random() * form.length)];
     record['release_date'] = faker.date.past();
     sellers.push(record);
   }
@@ -55,6 +55,18 @@ const inventoryGenerator = () => {
   return record;
 }
 
+const formGenerator = () => {
+  const form = ['DVD', 'Blu-ray', '4K', 'Prime Video'];
+  let result = [];
+  for (let i = 0; i < form.length; i++) {
+    let obj = {};
+    obj.price = faker.commerce.price();
+    obj.form = form[i];
+    result.push(obj);
+  }
+  return result;
+}
+
 const dataGenerator = () => {
   let data = [];
   [...Array(100).keys()].forEach(idx => {
@@ -66,6 +78,7 @@ const dataGenerator = () => {
     record['price'] = priceGenerator();
     record['shipping'] = shippingGenerator();
     record['inventory'] = inventoryGenerator();
+    record['form'] = formGenerator();
     data.push(record);
   })
   return data;

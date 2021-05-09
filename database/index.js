@@ -23,8 +23,9 @@ const sellerSchema = {
     unique: true
   },
   discs: Number,
-  status: String,
   price: Number,
+  newfrom: Number,
+  usedfrom: Number,
   edition: String,
   form: String,
   release_date: Date
@@ -46,6 +47,11 @@ const shippingSchema = {
   sold_by: String
 }
 
+const formSchema = {
+  form: String,
+  price: Number
+}
+
 const OverviewSchema = {
   product_id: {
     type: String,
@@ -56,7 +62,8 @@ const OverviewSchema = {
   price: priceSchema,
   other_sellers: [sellerSchema],
   shipping: shippingSchema,
-  inventory: inventorySchema
+  inventory: inventorySchema,
+  form: [formSchema]
 }
 
 const Overview = mongoose.model('Overview', OverviewSchema);
@@ -78,7 +85,7 @@ const save = (sampleData) => {
     })
 }
 
-// save(seed.sampleData);
+save(seed.sampleData);
 
 const getRecord = (id) => {
   return Overview.find({product_id: id});
