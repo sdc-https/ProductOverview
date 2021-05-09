@@ -1,5 +1,5 @@
 const moment = require('moment');
-const Seller = ({key, seller}) => (
+const Seller = ({seller}) => (
   <tr>
     <td><span>{seller.form}</span><br></br><span>{moment(seller.release_date).format("MMMM Do YYYY")}</span></td>
     <td>{seller.edition}</td>

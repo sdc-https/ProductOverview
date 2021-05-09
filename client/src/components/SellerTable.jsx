@@ -14,7 +14,7 @@ const SellerTable = ({sellers}) => (
         </tr>
       </thead>
       <tbody>
-        {sellers.map((seller, idx) => <Seller key={idx} seller={seller}/>)}
+        {sellers.map((seller, idx) => <Seller key={seller.seller_id} seller={seller}/>)}
       </tbody>
     </table>
 </div>

@@ -13,7 +13,11 @@ class Overview extends React.Component {
       save: null,
       save_pct: null,
       sellers: [],
-      form: []
+      form: [],
+      inventory: null,
+      in_stock: null,
+      ships_from: '',
+      sold_by: ''
     }
   }
 
@@ -31,8 +35,12 @@ class Overview extends React.Component {
           save: res.price.list_price - res.price.price,
           save_pct: Math.round((res.price.list_price - res.price.price) / res.price.list_price * 100, 0),
           sellers: res.other_sellers,
-          form: res.form
+          form: res.form,
+          in_stock: res.inventory.in_stock,
+          ships_from: res.shipping.ships_from,
+          sold_by: res.shipping.sold_by
         })
+        console.log(this.state);
       },
       error: (error) => {
         console.log(error);
@@ -57,7 +65,12 @@ class Overview extends React.Component {
             />
           </div>
           <div className="col-md-3">
-            <CartWidget product={this.state.product} />
+            <CartWidget
+              price={this.state.price}
+              in_stock={this.state.in_stock}
+              ships_from={this.state.ships_from}
+              sold_by={this.state.sold_by}
+            />
           </div>
         </div>
       </div>
