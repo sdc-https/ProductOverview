@@ -52,7 +52,7 @@ class Overview extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-md-5">
+          <div className="col-md-6">
             <OverviewWidget
               product_name={this.state.product_name}
               package_name={this.state.package_name}
