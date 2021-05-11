@@ -1,6 +1,6 @@
 const moment = require('moment');
 const React = require('react');
-import Stock from './Stock.jsx';
+import Stock from '../Stock/Stock.jsx';
 
 class CartWidget extends React.Component {
   constructor(props) {

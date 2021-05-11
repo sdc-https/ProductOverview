@@ -2,8 +2,8 @@ const $ = require( "jquery" );
 const React = require('react');
 const ReactDOM = require('react-dom');
 
-import OverviewWidget from './components/OverviewWidget.jsx';
-import CartWidget from './components/CartWidget.jsx';
+import OverviewWidget from './components/Overview/OverviewWidget.jsx';
+import CartWidget from './components/Cart/CartWidget.jsx';
 
 class Overview extends React.Component {
 
@@ -27,6 +27,7 @@ class Overview extends React.Component {
 
   componentDidMount() {
     const productid = "'" + Math.floor(Math.random() * 100).toString() + "'";
+
     $.ajax({
       url: 'http://localhost:3000/overview/' + productid,
       method: 'GET',

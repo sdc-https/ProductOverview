@@ -6,13 +6,17 @@ const Promise = require('bluebird');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-app.use(express.static(path.join(__dirname, '/../client/dist'), {index: false}));
+app.use(express.static(path.join(__dirname, '/../client/dist')));
 
 app.use( (req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   next();
 });
+
+app.get('/', (req, res) => {
+  res.end();
+})
 
 app.get('/overview/:productid', (req, res) => {
   Promise.resolve(req.params.productid)
