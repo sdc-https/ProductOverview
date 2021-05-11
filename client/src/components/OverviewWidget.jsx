@@ -1,5 +1,6 @@
 import SellerTable from './SellerTable.jsx';
 import FormWidget from './FormWidget.jsx';
+const React = require('react');
 
 class OverviewWidget extends React.Component {
   constructor(props) {
@@ -14,10 +15,10 @@ class OverviewWidget extends React.Component {
        <span className="cast">
          <a className="a-link-normal">Various</a>
          <span className="a-color-secondary"> &#40;Actor, Director&#41;</span>
-         <i class="a-icon a-icon-text-separator" role="presentation"></i>
+         <i className="a-icon a-icon-text-separator" role="presentation"></i>
          <span className="a-color-secondary">Rated:</span>
          <span className="product-cast-rating"> PG-13</span>
-         <i class="a-icon a-icon-text-separator" role="presentation"></i>
+         <i className="a-icon a-icon-text-separator" role="presentation"></i>
          <span className="a-color-secondary">Format:</span>
          <span className="product-cast-form"> DVD</span>
       </span><br></br>

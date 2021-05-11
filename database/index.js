@@ -85,7 +85,7 @@ const save = (sampleData) => {
     })
 }
 
-save(seed.sampleData);
+// save(seed.sampleData);
 
 const getRecord = (id) => {
   return Overview.find({product_id: id});

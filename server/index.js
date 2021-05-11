@@ -1,18 +1,16 @@
 const express = require('express');
 const app = express();
 const db = require('../database/index.js');
+const path = require('path');
 const Promise = require('bluebird');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-const port = 3000;
-app.listen(port, () => {
-  console.log(`Listening to port ${port}`);
-})
+app.use(express.static(path.join(__dirname, '/../client/dist'), {index: false}));
 
 app.use( (req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   next();
 });
 
@@ -26,7 +24,7 @@ app.get('/overview/:productid', (req, res) => {
       return db.getRecord(target);
     })
     .then(records => {
-      res.send(records[0]);
+      res.json(records[0]);
     })
     .catch(error => {
       res.send('An error has occured');
@@ -87,4 +85,9 @@ app.get(urlAPIInventory, (req, res, next) => {
     .catch(error => {
       res.send('An error has occurred');
     })
+})
+
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Listening to port ${port}`);
 })

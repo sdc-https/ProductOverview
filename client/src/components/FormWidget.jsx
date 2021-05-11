@@ -1,4 +1,5 @@
 import Form from './Form.jsx';
+const React = require('react');
 
 const FormWidget = ({forms}) => (
   <div className="container">

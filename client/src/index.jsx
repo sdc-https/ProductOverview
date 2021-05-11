@@ -1,8 +1,12 @@
 const $ = require( "jquery" );
+const React = require('react');
+const ReactDOM = require('react-dom');
+
 import OverviewWidget from './components/OverviewWidget.jsx';
 import CartWidget from './components/CartWidget.jsx';
 
 class Overview extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -40,7 +44,6 @@ class Overview extends React.Component {
           ships_from: res.shipping.ships_from,
           sold_by: res.shipping.sold_by
         })
-        console.log(this.state);
       },
       error: (error) => {
         console.log(error);
