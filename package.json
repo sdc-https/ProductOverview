@@ -5,7 +5,8 @@
   "main": ".eslintrc.js",
   "scripts": {
     "react-dev": "webpack --watch",
-    "server-dev": "nodemon server/index.js"
+    "server-dev": "nodemon server/index.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -20,25 +21,32 @@
   "homepage": "https://github.com/Zheng-Yi-Sao/ProductOverview#readme",
   "devDependencies": {
     "@babel/core": "^7.14.0",
-    "@babel/preset-env": "^7.14.0",
+    "@babel/plugin-syntax-jsx": "^7.12.13",
+    "@babel/preset-env": "^7.14.1",
     "@babel/preset-react": "^7.13.13",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.4",
+    "jest": "^26.6.3",
     "style-loader": "^2.0.0",
     "webpack": "^5.36.2",
     "webpack-cli": "^4.6.0"
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "babel-jest": "^26.6.3",
     "bluebird": "^3.5.1",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "faker": "^5.5.3",
-    "jest-enzyme": "^7.1.2",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
     "mongoose": "^5.12.7",
     "nodemon": "^2.0.7",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-test-renderer": "^17.0.2",
+    "save": "^2.4.0",
     "uuid": "^8.3.2"
   }
 }

@@ -1,8 +1,12 @@
 const $ = require( "jquery" );
-import OverviewWidget from './components/OverviewWidget.jsx';
-import CartWidget from './components/CartWidget.jsx';
+const React = require('react');
+const ReactDOM = require('react-dom');
+
+import OverviewWidget from './components/Overview/OverviewWidget.jsx';
+import CartWidget from './components/Cart/CartWidget.jsx';
 
 class Overview extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -23,6 +27,7 @@ class Overview extends React.Component {
 
   componentDidMount() {
     const productid = "'" + Math.floor(Math.random() * 100).toString() + "'";
+
     $.ajax({
       url: 'http://localhost:3000/overview/' + productid,
       method: 'GET',
@@ -40,7 +45,6 @@ class Overview extends React.Component {
           ships_from: res.shipping.ships_from,
           sold_by: res.shipping.sold_by
         })
-        console.log(this.state);
       },
       error: (error) => {
         console.log(error);
@@ -52,7 +56,7 @@ class Overview extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-md-5">
+          <div className="col-md-6">
             <OverviewWidget
               product_name={this.state.product_name}
               package_name={this.state.package_name}

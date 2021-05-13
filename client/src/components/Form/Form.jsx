@@ -1,3 +1,5 @@
+const React = require('react');
+
 const Form = ({form, price}) => (
   <div className="col">
     <span>{form}</span><br></br>

@@ -1,4 +1,5 @@
 import Seller from './Seller.jsx';
+const React = require('react');
 
 const SellerTable = ({sellers}) => (
   <div>
@@ -6,11 +7,11 @@ const SellerTable = ({sellers}) => (
       <thead>
         <tr>
           <th scope="col">Additional DVD Options</th>
-          <th scope="col">Edition</th>
-          <th scope="col">Discs</th>
-          <th scope="col">Price</th>
-          <th scope="col">New from</th>
-          <th scope="col">Used from</th>
+          <th className="col-name" scope="col">Edition</th>
+          <th className="col-name" scope="col">Discs</th>
+          <th className="col-name" scope="col">Price</th>
+          <th className="col-name" scope="col">New from</th>
+          <th className="col-name" scope="col">Used from</th>
         </tr>
       </thead>
       <tbody>
