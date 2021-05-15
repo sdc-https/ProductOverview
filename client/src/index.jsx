@@ -21,12 +21,17 @@ class Overview extends React.Component {
       inventory: null,
       in_stock: null,
       ships_from: '',
-      sold_by: ''
+      sold_by: '',
+      cast: [],
+      rating: '',
+      average: null,
+      reviewcount: null
     }
   }
 
   componentDidMount() {
-    const productid = "'" + Math.floor(Math.random() * 100).toString() + "'";
+    const id = Math.floor(Math.random() * 100);
+    const productid = "'" + id.toString() + "'";
 
     $.ajax({
       url: 'http://localhost:3000/overview/' + productid,
@@ -44,6 +49,34 @@ class Overview extends React.Component {
           in_stock: res.inventory.in_stock,
           ships_from: res.shipping.ships_from,
           sold_by: res.shipping.sold_by
+        })
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
+
+    $.ajax({
+      url: 'http://localhost:3001/Information/' + id.toString(),
+      method: 'GET',
+      success: (res) => {
+        this.setState({
+          cast: res.cast,
+          rating: res.rating
+        })
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
+
+    $.ajax({
+      url: 'http://localhost:9001/averagereview/' + id.toString(),
+      method: 'GET',
+      success: (res) => {
+        this.setState({
+          average: res.averageReviews,
+          rating: res.totalReviews
         })
       },
       error: (error) => {
