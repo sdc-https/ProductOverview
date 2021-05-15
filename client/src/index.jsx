@@ -22,7 +22,9 @@ class Overview extends React.Component {
       in_stock: null,
       ships_from: '',
       sold_by: '',
-      cast: [],
+      director: '',
+      actor1: '',
+      actor2: '',
       rating: '',
       average: null,
       reviewcount: null
@@ -60,8 +62,11 @@ class Overview extends React.Component {
       url: 'http://localhost:3001/Information/' + id.toString(),
       method: 'GET',
       success: (res) => {
+        console.log(res.cast[0]);
         this.setState({
-          cast: res.cast,
+          actor1: res.cast[0],
+          actor2: res.cast[1],
+          director: res.cast[res.cast.length - 1],
           rating: res.rating
         })
       },
@@ -76,7 +81,7 @@ class Overview extends React.Component {
       success: (res) => {
         this.setState({
           average: res.averageReviews,
-          rating: res.totalReviews
+          reviewcount: res.totalReviews
         })
       },
       error: (error) => {
@@ -92,6 +97,12 @@ class Overview extends React.Component {
           <div className="col-md-6">
             <OverviewWidget
               product_name={this.state.product_name}
+              actor1={this.state.actor1}
+              actor2={this.state.actor2}
+              director={this.state.director}
+              rating={this.state.rating}
+              average={this.state.average}
+              reviewcount={this.state.reviewcount}
               package_name={this.state.package_name}
               price={this.state.price}
               list_price={this.state.list_price}
