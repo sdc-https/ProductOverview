@@ -82,4 +82,4 @@ class Overview extends React.Component {
   }
 }
 
-ReactDOM.render(<Overview />, document.getElementById("root"));
+ReactDOM.render(<Overview />, document.getElementById("product-overview"));

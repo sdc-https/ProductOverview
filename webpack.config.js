@@ -7,7 +7,7 @@ module.exports = {
   entry: `${src_dir}/index.jsx`,
   output: {
     path: dist_dir,
-    filename: "bundle.js"
+    filename: "overview.js"
   },
   module: {
     rules: [
