@@ -14,15 +14,15 @@ class OverviewWidget extends React.Component {
        <span className="product-package"><b>{this.props.package_name}</b></span><br></br>
        <span className="cast">
          <a className="a-link-normal">Various</a>
-         <span className="a-color-secondary"> &#40;Actor, Director&#41;</span>
+         <span className="a-color-secondary"> &#40;{this.props.actor1}, {this.props.actor2}&#41;</span>
          <i className="a-icon a-icon-text-separator" role="presentation"></i>
          <span className="a-color-secondary">Rated:</span>
-         <span className="product-cast-rating"> PG-13</span>
+         <span className="product-cast-rating"> {this.props.rating}</span>
          <i className="a-icon a-icon-text-separator" role="presentation"></i>
          <span className="a-color-secondary">Format:</span>
          <span className="product-cast-form"> DVD</span>
       </span><br></br>
-      <span className="a-icon-all">4.8 out of 5 stars</span><span className="rating">&nbsp;&nbsp;21,948 ratings</span><br></br>
+      <span className="a-icon-all">{this.props.average} out of 5 stars</span><span className="rating">&nbsp;&nbsp;{this.props.reviewcount} ratings</span><br></br>
        <span className="a-color-secondary">List Price:&nbsp;<strike className="product-listprice">${this.props.list_price}</strike></span>
        <a className="a-link-normal" href="https://www.amazon.com/gp/help/customer/display.html?nodeId=GQ6B6RH72AX8D2TD&ref_=dp_hp">&nbsp;&nbsp;Details</a><br></br>
        <span className="a-color-secondary">Price:&nbsp;</span>

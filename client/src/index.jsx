@@ -21,12 +21,20 @@ class Overview extends React.Component {
       inventory: null,
       in_stock: null,
       ships_from: '',
-      sold_by: ''
+      sold_by: '',
+      director: '',
+      actor1: '',
+      actor2: '',
+      rating: '',
+      average: null,
+      reviewcount: null
     }
   }
 
   componentDidMount() {
-    const productid = "'" + Math.floor(Math.random() * 100).toString() + "'";
+
+    const productid = new URL(window.location).pathname.slice(1, );
+    const id = productid.slice(1, productid.length - 1);
 
     $.ajax({
       url: 'http://localhost:3000/overview/' + productid,
@@ -50,6 +58,36 @@ class Overview extends React.Component {
         console.log(error);
       }
     })
+
+    $.ajax({
+      url: 'http://localhost:3001/Information/' + id,
+      method: 'GET',
+      success: (res) => {
+        this.setState({
+          actor1: res.cast[0],
+          actor2: res.cast[1],
+          director: res.cast[res.cast.length - 1],
+          rating: res.rating
+        })
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
+
+    $.ajax({
+      url: 'http://localhost:9001/averagereview/' + id,
+      method: 'GET',
+      success: (res) => {
+        this.setState({
+          average: res.averageReviews,
+          reviewcount: res.totalReviews
+        })
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
   }
 
   render() {
@@ -59,6 +97,12 @@ class Overview extends React.Component {
           <div className="col-md-6">
             <OverviewWidget
               product_name={this.state.product_name}
+              actor1={this.state.actor1}
+              actor2={this.state.actor2}
+              director={this.state.director}
+              rating={this.state.rating}
+              average={this.state.average}
+              reviewcount={this.state.reviewcount}
               package_name={this.state.package_name}
               price={this.state.price}
               list_price={this.state.list_price}
@@ -82,4 +126,4 @@ class Overview extends React.Component {
   }
 }
 
-ReactDOM.render(<Overview />, document.getElementById("root"));
+ReactDOM.render(<Overview />, document.getElementById("product-overview"));
