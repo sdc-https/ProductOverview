@@ -14,9 +14,10 @@ app.use( (req, res, next) => {
   next();
 });
 
-app.get('/', (req, res) => {
-  res.end();
-})
+
+app.get('/:productid', (req, res) => {
+  res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
+});
 
 app.get('/overview/:productid', (req, res) => {
   Promise.resolve(req.params.productid)

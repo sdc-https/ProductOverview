@@ -32,8 +32,9 @@ class Overview extends React.Component {
   }
 
   componentDidMount() {
-    const id = Math.floor(Math.random() * 100);
-    const productid = "'" + id.toString() + "'";
+
+    const productid = new URL(window.location).pathname.slice(1, );
+    const id = productid.slice(1, productid.length - 1);
 
     $.ajax({
       url: 'http://localhost:3000/overview/' + productid,
@@ -59,10 +60,9 @@ class Overview extends React.Component {
     })
 
     $.ajax({
-      url: 'http://localhost:3001/Information/' + id.toString(),
+      url: 'http://localhost:3001/Information/' + id,
       method: 'GET',
       success: (res) => {
-        console.log(res.cast[0]);
         this.setState({
           actor1: res.cast[0],
           actor2: res.cast[1],
@@ -76,7 +76,7 @@ class Overview extends React.Component {
     })
 
     $.ajax({
-      url: 'http://localhost:9001/averagereview/' + id.toString(),
+      url: 'http://localhost:9001/averagereview/' + id,
       method: 'GET',
       success: (res) => {
         this.setState({
