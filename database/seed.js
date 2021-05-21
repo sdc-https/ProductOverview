@@ -71,7 +71,7 @@ const dataGenerator = () => {
   let data = [];
   [...Array(100).keys()].forEach(idx => {
     let record = {};
-    record['product_id'] = idx.toString();
+    record['product_id'] = (idx + 1).toString();
     record['product_name'] = faker.commerce.productName();
     record['package_name'] = faker.commerce.productMaterial();
     record['other_sellers'] = sellerGenerator();

@@ -25,8 +25,7 @@ app.get('/overview/:productid', (req, res) => {
       if (!id) {
         throw id;
       }
-      let target = id.slice(1, id.length - 1);
-      return db.getRecord(target);
+      return db.getRecord(id);
     })
     .then(records => {
       res.json(records[0]);
