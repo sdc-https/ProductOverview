@@ -14,8 +14,7 @@ app.use( (req, res, next) => {
   next();
 });
 
-
-app.get('/:productid', (req, res) => {
+app.get('*/dp/:productid', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 });
 
@@ -91,7 +90,7 @@ app.get(urlAPIInventory, (req, res, next) => {
     })
 })
 
-const port = 3000;
+const port = 3002;
 app.listen(port, () => {
   console.log(`Listening to port ${port}`);
 })
