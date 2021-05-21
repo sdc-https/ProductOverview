@@ -33,11 +33,10 @@ class Overview extends React.Component {
 
   componentDidMount() {
 
-    const productid = new URL(window.location).pathname.slice(1, );
-    const id = productid.slice(1, productid.length - 1);
+    const productid = new URL(window.location).pathname.slice(4, );
 
     $.ajax({
-      url: 'http://localhost:3000/overview/' + productid,
+      url: 'http://localhost:3002/overview/' + productid,
       method: 'GET',
       success: (res) => {
         this.setState({
@@ -60,7 +59,7 @@ class Overview extends React.Component {
     })
 
     $.ajax({
-      url: 'http://localhost:3001/Information/' + id,
+      url: 'http://localhost:3001/Information/' + productid,
       method: 'GET',
       success: (res) => {
         this.setState({
@@ -75,19 +74,19 @@ class Overview extends React.Component {
       }
     })
 
-    $.ajax({
-      url: 'http://localhost:9001/averagereview/' + id,
-      method: 'GET',
-      success: (res) => {
-        this.setState({
-          average: res.averageReviews,
-          reviewcount: res.totalReviews
-        })
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    })
+    // $.ajax({
+    //   url: 'http://localhost:3004/averagereview/' + id,
+    //   method: 'GET',
+    //   success: (res) => {
+    //     this.setState({
+    //       average: res.averageReviews,
+    //       reviewcount: res.totalReviews
+    //     })
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //   }
+    // })
   }
 
   render() {

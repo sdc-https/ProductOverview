@@ -14,8 +14,7 @@ app.use( (req, res, next) => {
   next();
 });
 
-
-app.get('/:productid', (req, res) => {
+app.get('*/dp/:productid', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 });
 
@@ -25,8 +24,7 @@ app.get('/overview/:productid', (req, res) => {
       if (!id) {
         throw id;
       }
-      let target = id.slice(1, id.length - 1);
-      return db.getRecord(target);
+      return db.getRecord(id);
     })
     .then(records => {
       res.json(records[0]);
@@ -92,7 +90,7 @@ app.get(urlAPIInventory, (req, res, next) => {
     })
 })
 
-const port = 3000;
+const port = 3002;
 app.listen(port, () => {
   console.log(`Listening to port ${port}`);
 })
