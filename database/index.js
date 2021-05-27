@@ -1,4 +1,3 @@
-const seed = require('./seed.js');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost/overview_db', {
@@ -68,27 +67,9 @@ const OverviewSchema = {
 
 const Overview = mongoose.model('Overview', OverviewSchema);
 
-const save = (sampleData) => {
-  let recordInsert = sampleData.map(record => ({
-    updateOne: {
-      filter: {product_id: record.product_id},
-      update: {$set: record},
-      upsert: true
-    }
-  }));
-  Overview.bulkWrite(recordInsert)
-    .then(() => {
-      console.log('Data has been successfully saved into MongoDB');
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-}
-
-// save(seed.sampleData);
-
 const getRecord = (id) => {
   return Overview.find({product_id: id});
 };
 
 module.exports.getRecord = getRecord;
+exports.Overview = Overview;

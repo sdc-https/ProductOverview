@@ -1,5 +1,6 @@
 const faker = require('faker');
 const uuid = require('uuid');
+const db = require('./index.js');
 
 const sellerGenerator = () => {
   const num = Math.floor(Math.random() * 20);
@@ -10,9 +11,9 @@ const sellerGenerator = () => {
     let record = {};
     record['seller_id'] = uuid.v1();
     record['discs'] = Math.floor(Math.random() * 50);
-    record['price']= faker.commerce.price();
-    record['newfrom'] = faker.commerce.price();
-    record['usedfrom'] = faker.commerce.price();
+    record['price']= Math.floor(Math.random() * 40) + 5;
+    record['newfrom'] = Math.floor(Math.random() * 35) + 5;
+    record['usedfrom'] = Math.floor(Math.random() * 30) + 3;
     record['edition'] = edition[Math.floor(Math.random() * edition.length)];
     record['form'] = form[Math.floor(Math.random() * form.length)];
     record['release_date'] = faker.date.past();
@@ -21,11 +22,13 @@ const sellerGenerator = () => {
   return sellers;
 };
 
-
 const priceGenerator = () => {
   let record = {};
-  record['list_price'] = Math.round(faker.commerce.price(), 2);
-  record['price'] = Math.round(record['list_price'] - (record['list_price'] % 10) * Math.random(), 2);
+  record['list_price'] = Math.floor(Math.random() * 40) + 7;
+  record['price'] = record['list_price'] - Math.floor(Math.random() * 10 + 2);
+  if (record['price'] <= 0) {
+    record['price'] = record['list_price'];
+  }
   return record;
 };
 
@@ -60,7 +63,7 @@ const formGenerator = () => {
   let result = [];
   for (let i = 0; i < form.length; i++) {
     let obj = {};
-    obj.price = faker.commerce.price();
+    obj.price = Math.floor(Math.random() * 40) + 5;;
     obj.form = form[i];
     result.push(obj);
   }
@@ -86,5 +89,24 @@ const dataGenerator = () => {
 
 const sampleData = dataGenerator();
 
-module.exports.sampleData = sampleData;
+const save = (sampleData) => {
+
+  let recordInsert = sampleData.map(record => ({
+    updateOne: {
+      filter: {product_id: record.product_id},
+      update: {$set: record},
+      upsert: true
+    }
+  }));
+
+  db.Overview.bulkWrite(recordInsert)
+    .then(() => {
+      console.log('Data has been successfully saved into MongoDB');
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+}
+
+save(sampleData);
 

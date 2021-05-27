@@ -27,7 +27,7 @@ class OverviewWidget extends React.Component {
        <a className="a-link-normal" href="https://www.amazon.com/gp/help/customer/display.html?nodeId=GQ6B6RH72AX8D2TD&ref_=dp_hp">&nbsp;&nbsp;Details</a><br></br>
        <span className="a-color-secondary">Price:&nbsp;</span>
        <span className="product-price">${this.props.price}</span>
-       <span>&nbsp;Get&nbsp;<b>Fast, Free Shipping&nbsp;</b>with&nbsp;</span>
+       <span>&nbsp;Get&nbsp;<b>Fast, FREE Shipping&nbsp;</b>with&nbsp;</span>
        <a className="a-link-normal" href="https://www.amazon.com/amazonprime?_encoding=UTF8&primeCampaignId=primedp_ventures_desktopBelowThreshold&ref=primedp_ventures_desktopBelowThreshold">Amazon Prime</a>
        <span>&nbsp;&amp;</span>
        <a className="a-link-normal" href="https://www.amazon.com/b?node=18726306011">&nbsp;Free Returns</a><br></br>

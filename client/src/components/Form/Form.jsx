@@ -2,8 +2,8 @@ const React = require('react');
 
 const Form = ({form, price}) => (
   <div className="col">
-    <span>{form}</span><br></br>
-    <span>${price}</span>
+    <span className="a-size-small">{form}</span><br></br>
+    <span className="a-size-small">${price}</span>
   </div>
 )
 
