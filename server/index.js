@@ -44,8 +44,7 @@ app.get(urlAPISeller, (req, res, next) => {
       if (!id) {
         throw id;
       }
-      let target = id.slice(1, id.length - 1);
-      return db.getRecord(target);
+      return db.getRecord(id);
     })
     .then(records => {
       res.send(records[0].other_sellers);
@@ -61,8 +60,7 @@ app.get(urlAPIPrice, (req, res, next) => {
       if (!id) {
         throw id;
       }
-      let target = id.slice(1, id.length - 1)
-      return db.getRecord(target);
+      return db.getRecord(id);
     })
     .then(records => {
       res.send(records[0].price);
@@ -78,8 +76,7 @@ app.get(urlAPIInventory, (req, res, next) => {
       if (!id) {
         throw id;
       }
-      let target = id.slice(1, id.length - 1)
-      return db.getRecord(target);
+      return db.getRecord(id);
     })
     .then(records => {
       res.send(records[0].inventory);

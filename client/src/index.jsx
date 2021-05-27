@@ -74,19 +74,19 @@ class Overview extends React.Component {
       }
     })
 
-    // $.ajax({
-    //   url: 'http://localhost:3004/averagereview/' + id,
-    //   method: 'GET',
-    //   success: (res) => {
-    //     this.setState({
-    //       average: res.averageReviews,
-    //       reviewcount: res.totalReviews
-    //     })
-    //   },
-    //   error: (error) => {
-    //     console.log(error);
-    //   }
-    // })
+    $.ajax({
+      url: 'http://localhost:3004/averagereview/' + productid,
+      method: 'GET',
+      success: (res) => {
+        this.setState({
+          average: res.averageReviews,
+          reviewcount: res.totalReviews
+        })
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
   }
 
   render() {
