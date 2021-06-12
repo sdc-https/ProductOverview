@@ -1,4 +1,4 @@
-const React = require('react');
+// const React = require('react');
 
 const Form = ({form, price}) => (
   <div className="col">

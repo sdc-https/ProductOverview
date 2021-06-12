@@ -1,12 +1,16 @@
 const express = require('express');
 const app = express();
+const shrinkRay = require('shrink-ray-current');
 const db = require('../database/index.js');
 const path = require('path');
 const Promise = require('bluebird');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-app.use(express.static(path.join(__dirname, '/../client/dist')));
+
+app.use(shrinkRay());
+
+app.use(express.static(path.join(__dirname, '/../client/dist'), {maxAge: '30d'}));
 
 app.use( (req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -87,7 +91,7 @@ app.get(urlAPIInventory, (req, res, next) => {
     })
 })
 
-const port = 3002;
+const port = process.env.PORT || 3002;
 app.listen(port, () => {
   console.log(`Listening to port ${port}`);
 })

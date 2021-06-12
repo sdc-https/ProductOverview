@@ -1,6 +1,5 @@
 import SellerTable from '../Seller/SellerTable.jsx';
 import FormWidget from '../Form/FormWidget.jsx';
-const React = require('react');
 
 class OverviewWidget extends React.Component {
   constructor(props) {

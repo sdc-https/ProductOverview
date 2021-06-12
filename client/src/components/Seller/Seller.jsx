@@ -1,5 +1,4 @@
 const moment = require('moment');
-const React = require('react');
 const Seller = ({seller}) => (
   <tr>
     <td className="a-size-small"><span>{seller.form}</span><br></br><span>{moment(seller.release_date).format("MMMM D, YYYY")}</span></td>

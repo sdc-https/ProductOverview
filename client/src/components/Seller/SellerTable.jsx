@@ -1,5 +1,4 @@
 import Seller from './Seller.jsx';
-const React = require('react');
 
 const SellerTable = ({sellers}) => (
   <div>

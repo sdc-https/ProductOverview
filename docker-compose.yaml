@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  productoverview:
+    image: wapulab/productoverview:service-0
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 3002:3002
+    depends_on:
+      - db
+    links:
+      - db
+    restart: on-failure
+
+  db:
+    image: mongo
+    container_name: overview_db
+    ports: ["27017:27017"]
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
+    driver: local

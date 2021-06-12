@@ -1,11 +1,20 @@
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost/overview_db', {
+
+mongoose.connect('mongodb://db:27017/overview_db', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
   useCreateIndex: true
 });
+
+// mongoose.connect('mongodb://localhost:27017/overview_db', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   useFindAndModify: false,
+//   useCreateIndex: true
+// });
+
 const db = mongoose.connection;
 
 db.on('error', () => {
