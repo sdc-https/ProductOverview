@@ -1,6 +1,6 @@
 const $ = require( "jquery" );
-// const React = require('react');
-// const ReactDOM = require('react-dom');
+const React = require('react');
+const ReactDOM = require('react-dom');
 
 import OverviewWidget from './components/Overview/OverviewWidget.jsx';
 import CartWidget from './components/Cart/CartWidget.jsx';
@@ -36,7 +36,8 @@ class Overview extends React.Component {
     const productid = new URL(window.location).pathname.slice(4, );
 
     $.ajax({
-      url: `${process.env.OVERVIEW_IP}` + productid,
+      // url: `${process.env.OVERVIEW_IP}` + productid,
+      url: 'http://localhost:3002/overview/' + productid,
       method: 'GET',
       success: (res) => {
         this.setState({
@@ -59,7 +60,8 @@ class Overview extends React.Component {
     })
 
     $.ajax({
-      url: `${process.env.INFORMATION_IP}` + productid,
+      // url: `${process.env.INFORMATION_IP}` + productid,
+      url: 'http://localhost:3001/Information/' + productid,
       method: 'GET',
       success: (res) => {
         this.setState({
@@ -75,7 +77,8 @@ class Overview extends React.Component {
     })
 
     $.ajax({
-      url: `${process.env.REVIEW_IP}` + productid,
+      // url: `${process.env.REVIEW_IP}` + productid,
+      url: 'http://localhost:3004/averagereview/' + productid,
       method: 'GET',
       success: (res) => {
         this.setState({
