@@ -1,22 +1,125 @@
 # Project Name
+## Table of Contents
 
-> Amazon Item Page Clone
+- [Project Name](#project-name)
+  - [Table of Contents](#table-of-contents)
+- [Overview: Amazon Item Page](#overview-amazon-item-page)
+  - [Related Projects](#related-projects)
+  - [Usage](#usage)
+  - [Requirements](#requirements)
+  - [Development](#development)
+    - [Installing Dependencies](#installing-dependencies)
+
+# Overview: Amazon Item Page
+This is an mock-up amazon item page built during the Hack Reactor immersive's System Design Capstone project. This project is designed to maintain all original functionality and mimic the style of amazonitem page. This component of the project - product Overview Service - displayes the product overview information for a given item.
 
 ## Related Projects
 
-  - https://github.com/Zheng-Yi-Sao/ProductGallery
-  - https://github.com/Zheng-Yi-Sao/ProductInformation
-  - https://github.com/Zheng-Yi-Sao/CustomerReviews
+  - https://github.com/sdc-https/ProductGallery
+  - https://github.com/sdc-https/ProductInformation
+  - https://github.com/sdc-https/CustomerReviews
 
-## Table of Contents
-
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
 
 ## Usage
 
-> Some usage instructions
+The server with four endpoints are located in server/index.js.
+
+GET/overview/:productid
+
+The first endpoint `/overview/:productid` takes an id and reads the data stored in the database by id which is automatically assigned to entries in the database and returns an object with the following data {
+    "price": {
+        "list_price"
+        "price"
+        },
+    "shipping": {
+        "prime"
+        "sold_by"
+        "ships_from"
+        },
+    "inventory": {
+        "in_stock"
+        "inventory"
+        },
+    "product_id"
+    "form": [
+        { "price"
+          "form"
+          } ],
+    "other_sellers"
+        {   "seller_id",
+            "discs"
+            "price"
+            "newfrom"
+            "usedfrom"
+            "edition"
+            "form":
+            "release_date" },
+    ],
+    "package_name"
+    "product_name"
+}.
+
+POST/overview
+
+The second endpont`/overview/`  - using a POST request creates a new record into the  database and populates the database collection with the following data {
+    "price": {
+        "list_price"
+        "price"
+        },
+    "shipping": {
+        "prime"
+        "sold_by"
+        "ships_from"
+        },
+    "inventory": {
+        "in_stock"
+        "inventory"
+        },
+    "product_id"
+    "form": [
+        { "price"
+          "form"
+          } ],
+    "other_sellers"
+        {   "seller_id",
+            "discs"
+            "price"
+            "newfrom"
+            "usedfrom"
+            "edition"
+            "form":
+            "release_date" },
+    ],
+    "package_name"
+    "product_name"
+}.
+
+PUT/overview/:productid
+
+The third endpont`/overview/:productid` by using product_id as a query selector, this endpoint updates the following data of an existing record in the database using a PUT request.
+{
+    "product_id"
+      "price": {
+        "list_price"
+         "price"
+      },
+      "shipping": {
+        "prime"
+        "sold_by"
+        "ships_from"
+      },
+      "inventory": {
+        "in_stock"
+        "inventory"
+      },
+    "package_name"
+    "product_name"
+}
+
+DELETE/overview/:productid
+
+The fourth endpont`/overview/:productid` delete a given record in the database by id using the DELETE requests for an existing record.
+
 
 ## Requirements
 

@@ -1,19 +1,19 @@
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 
-mongoose.connect('mongodb://db:27017/overview_db', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true
-});
-
-// mongoose.connect('mongodb://localhost:27017/overview_db', {
+// mongoose.connect('mongodb://db:27017/overview_db', {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 //   useFindAndModify: false,
 //   useCreateIndex: true
 // });
+
+mongoose.connect('mongodb://localhost:27017/overview_db', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+});
 
 const db = mongoose.connection;
 
@@ -77,8 +77,46 @@ const OverviewSchema = {
 const Overview = mongoose.model('Overview', OverviewSchema);
 
 const getRecord = (id) => {
-  return Overview.find({product_id: id});
+  return Overview.find({ product_id: id });
+};
+
+const saveOverview = (overview) => {
+  return Overview.create(overview, function (error, docs) {
+    if(error) {
+      console.log(error)
+      return error;
+    }
+  });
+}
+
+const updateOverview = (overview) => {
+  return Overview.updateOne(
+    {
+      product_id: overview.product_id
+    },
+    {
+      product_name: overview.product_name,
+      package_name: overview.package_name,
+      price: overview.price,
+      shipping: overview.shipping,
+      inventory: overview.inventory
+    },
+    {
+      upsert: true
+    }
+  ,(err, result) => {
+    if(err) {
+      return err;
+    }
+  });
+};
+
+const deleteRecord = (id) => {
+  return Overview.deleteOne({ product_id: id });
 };
 
 module.exports.getRecord = getRecord;
+module.exports.saveOverview = saveOverview;
+module.exports.updateOverview = updateOverview;
+module.exports.deleteRecord = deleteRecord;
 exports.Overview = Overview;
