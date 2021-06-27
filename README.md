@@ -27,28 +27,94 @@ The server with four endpoints are located in server/index.js.
 GET/overview/:productid
 
 The first endpoint `/overview/:productid` takes an id and reads the data stored in the database by id which is automatically assigned to entries in the database and returns an object with the following data {
-    "price",
-    "shipping",
-    "inventory",
-    "other_sellers”,
-    "package_name",
+    "price": {
+        "list_price"
+        "price"
+        },
+    "shipping": {
+        "prime"
+        "sold_by"
+        "ships_from"
+        },
+    "inventory": {
+        "in_stock"
+        "inventory"
+        },
+    "product_id"
+    "form": [
+        { "price"
+          "form"
+          } ],
+    "other_sellers"
+        {   "seller_id",
+            "discs"
+            "price"
+            "newfrom"
+            "usedfrom"
+            "edition"
+            "form":
+            "release_date" },
+    ],
+    "package_name"
     "product_name"
 }.
 
 POST/overview
 
 The second endpont`/overview/`  - using a POST request creates a new record into the  database and populates the database collection with the following data {
-    "price",
-    "shipping",
-    "inventory",
-    "other_sellers”,
-    "package_name",
+    "price": {
+        "list_price"
+        "price"
+        },
+    "shipping": {
+        "prime"
+        "sold_by"
+        "ships_from"
+        },
+    "inventory": {
+        "in_stock"
+        "inventory"
+        },
+    "product_id"
+    "form": [
+        { "price"
+          "form"
+          } ],
+    "other_sellers"
+        {   "seller_id",
+            "discs"
+            "price"
+            "newfrom"
+            "usedfrom"
+            "edition"
+            "form":
+            "release_date" },
+    ],
+    "package_name"
     "product_name"
-}..
+}.
 
 PUT/overview/:productid
 
-The third endpont`/overview/:productid` by using product_id as a query selector updates an existing record in the database using a PUT request.
+The third endpont`/overview/:productid` by using product_id as a query selector, this endpoint updates the following data of an existing record in the database using a PUT request.
+{
+    "product_id"
+      "price": {
+        "list_price"
+         "price"
+      },
+      "shipping": {
+        "prime"
+        "sold_by"
+        "ships_from"
+      },
+      "inventory": {
+        "in_stock"
+        "inventory"
+      },
+    "package_name"
+    "product_name"
+}
 
 DELETE/overview/:productid
 

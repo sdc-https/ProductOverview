@@ -96,7 +96,10 @@ const updateOverview = (overview) => {
     },
     {
       product_name: overview.product_name,
-      package_name: overview.package_name
+      package_name: overview.package_name,
+      price: overview.price,
+      shipping: overview.shipping,
+      inventory: overview.inventory
     },
     {
       upsert: true
