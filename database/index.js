@@ -1,122 +1,61 @@
-const mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
+const { Client, Pool } = require('pg')
+const client = new Client({
+  //user: 'dbuser',
+  host: 'localhost',
+  database: 'overview_db',
+  //password: 'password',
+  port: 5432,
+})
 
-// mongoose.connect('mongodb://db:27017/overview_db', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-//   useFindAndModify: false,
-//   useCreateIndex: true
-// });
+const pool = new Pool({
+  //user: 'dbuser',
+  host: 'localhost',
+  database: 'overview_db',
+  max: 25,
+  //password: 'password',
+  port: 5432,
+})
 
-mongoose.connect('mongodb://localhost:27017/overview_db', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true
-});
+pool.connect()
 
-const db = mongoose.connection;
+client.connect()
 
-db.on('error', () => {
-  console.log('An error has occured in connecting with MongoDB.');
-});
 
-db.once('open', () => {
-  console.log('Connected with MongoDB successfully.');
-});
-
-const sellerSchema = {
-  seller_id: {
-    type: String,
-    unique: true
-  },
-  discs: Number,
-  price: Number,
-  newfrom: Number,
-  usedfrom: Number,
-  edition: String,
-  form: String,
-  release_date: Date
+const getRecord = (product_id) => {
+  return client.query(`select distinct o.product_id, o.package_name, o.product_name, p.list_price, p.price, i.in_stock, i.inventory, s.prime, s.sold_by, s.ships_from, f.price, f.form, sl.seller_id, sl.discs, sl.price, sl.newfrom, sl.usedfrom, sl.edition, sl.form, sl.release_date from overview o left outer join price p on o.product_id = p.product_id left outer join inventory i on p.product_id = i.product_id left outer join shipping s on i.product_id = s.product_id left outer join form f on s.product_id = f.product_id left outer join seller sl on f.product_id = sl.product_id where o.product_id = ${product_id};`)
 };
 
-const priceSchema = {
-  list_price: Number,
-  price: Number
+const getOverview = (product_id) => {
+  return client.query(`select product_id, package_name, product_name from overview where product_id = ${product_id};`)
 };
 
-const inventorySchema = {
-  in_stock: Boolean,
-  inventory: Number
+const getPrice = (product_id) => {
+  return client.query(`select list_price, price from price where product_id = ${product_id};`)
 };
 
-const shippingSchema = {
-  prime: Boolean,
-  ships_from: String,
-  sold_by: String
-}
-
-const formSchema = {
-  form: String,
-  price: Number
-}
-
-const OverviewSchema = {
-  product_id: {
-    type: String,
-    unique: true
-  },
-  product_name: String,
-  package_name: String,
-  price: priceSchema,
-  other_sellers: [sellerSchema],
-  shipping: shippingSchema,
-  inventory: inventorySchema,
-  form: [formSchema]
-}
-
-const Overview = mongoose.model('Overview', OverviewSchema);
-
-const getRecord = (id) => {
-  return Overview.find({ product_id: id });
+const getOtherSellers = (product_id) => {
+  return client.query(`select seller_id, discs, price, newfrom, usedfrom, edition, form, release_date from seller where product_id = ${product_id};`)
 };
 
-const saveOverview = (overview) => {
-  return Overview.create(overview, function (error, docs) {
-    if(error) {
-      console.log(error)
-      return error;
-    }
-  });
-}
-
-const updateOverview = (overview) => {
-  return Overview.updateOne(
-    {
-      product_id: overview.product_id
-    },
-    {
-      product_name: overview.product_name,
-      package_name: overview.package_name,
-      price: overview.price,
-      shipping: overview.shipping,
-      inventory: overview.inventory
-    },
-    {
-      upsert: true
-    }
-  ,(err, result) => {
-    if(err) {
-      return err;
-    }
-  });
+const getInventory = (product_id) => {
+  return client.query(`select in_stock, inventory from inventory where product_id = ${product_id};`)
+};
+const getShipping = (product_id) => {
+  return client.query(`select prime, sold_by, ships_from from shipping where product_id = ${product_id};`)
 };
 
-const deleteRecord = (id) => {
-  return Overview.deleteOne({ product_id: id });
+const getForm = (product_id) => {
+  return client.query(`select price, form from form where product_id = ${product_id};`)
 };
 
+
+module.exports.client = client;
+module.exports.pool = pool;
 module.exports.getRecord = getRecord;
-module.exports.saveOverview = saveOverview;
-module.exports.updateOverview = updateOverview;
-module.exports.deleteRecord = deleteRecord;
-exports.Overview = Overview;
+module.exports.getOverview = getOverview;
+module.exports.getOtherSellers = getOtherSellers;
+module.exports.getPrice = getPrice;
+module.exports.getInventory = getInventory;
+module.exports.getShipping = getShipping;
+module.exports.getForm = getForm;
+

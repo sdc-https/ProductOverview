@@ -8,7 +8,6 @@ const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
 
-
 app.use(shrinkRay());
 app.use(bodyParser.json())
 
@@ -24,22 +23,47 @@ app.get('*/dp/:productid', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 });
 
+
 app.get('/overview/:productid', (req, res) => {
-  Promise.resolve(req.params.productid)
+ Promise.resolve(req.params.productid)
     .then(id => {
       if (!id) {
         throw id;
       }
-      return db.getRecord(id);
+      return readOverview(id);
     })
     .then(records => {
-      res.json(records[0]);
-      // console.log(records);
+      console.log(records)
+      res.json(records);
+      //console.log(records);
     })
     .catch(error => {
       res.send('An error has occured');
     })
 });
+
+ async function readOverview(id) {
+  let result = {};
+    overview =  await db.getOverview(id);
+    other_sellers =  await db.getOtherSellers(id);
+    price = await db.getPrice(id);
+    inventory =  await db.getInventory(id);
+    shipping = await db.getShipping(id);
+    form = await db.getForm(id);
+
+    result = {
+      price: price.rows[0],
+      shipping: shipping.rows[0],
+      inventory: inventory.rows[0],
+      product_id: overview.rows[0].product_id,
+      form: form.rows,
+      other_sellers : other_sellers.rows,
+      package_name: overview.rows[0].package_name,
+      product_name : overview.rows[0].product_name,
+    }
+
+    return result;
+  }
 
 app.post('/overview/', (req, res) => {
   Promise.resolve(req.body)
@@ -48,7 +72,6 @@ app.post('/overview/', (req, res) => {
     })
     .then(result => {
       res.send('overview created');
-      return;
     })
     .catch(error => {
       console.log(error)
@@ -60,11 +83,9 @@ app.put('/overview/:productid', (req, res, next) => {
   Promise.resolve(req.body)
     .then(overview => {
       return db.updateOverview(overview);
-      return;
     })
     .then(result => {
       res.send('record updated sucessfully');
-      return
     })
     .catch(error => {
       console.log(error)
@@ -79,7 +100,6 @@ app.delete('/overview/:productid', (req, res, next) => {
     })
     .then(result => {
       res.send('record deleted');
-      return
     })
     .catch(error => {
       res.send('An error has occured');
@@ -98,7 +118,7 @@ app.get(urlAPISeller, (req, res, next) => {
       if (!id) {
         throw id;
       }
-      return db.getRecord(id);
+      return getRecord(id);
     })
     .then(records => {
       res.send(records[0].other_sellers);
@@ -106,7 +126,7 @@ app.get(urlAPISeller, (req, res, next) => {
     .catch(error => {
       res.send('An error has occurred');
     })
-})
+});
 
 app.get(urlAPIPrice, (req, res, next) => {
   Promise.resolve(req.params.productid)
