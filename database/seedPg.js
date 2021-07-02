@@ -74,7 +74,7 @@ const formGenerator = () => {
 
 function dataGenerator() {
   let data = [];
-  for (let idx = 5000000; idx < 10000000; idx++) {
+  for (let idx = 0; idx < 10000000; idx++) {
     let query = []
     let record = {}
     record['product_id'] = (idx + 1).toString();
