@@ -2,3 +2,4 @@ node_modules
 MyFirstKey.pem
 .env
 .dockerignore
+config.js
