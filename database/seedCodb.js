@@ -4,7 +4,7 @@ const faker = require('faker');
 const uuid = require('uuid');
 
 const sellerGenerator = () => {
-  const num = Math.floor(Math.random() * 1 + 2);
+  const num = Math.floor(Math.random() * 3 + 1);
   const form = ['DVD', 'Blu-ray', '4K', 'Prime Video']
   const edition = ['Special Edition', "Collectors Edition", "Limited Collectors Edition", 'Special Extended Version', 'Limited Edition'];
   let sellers = [];
@@ -50,7 +50,7 @@ const shippingGenerator = () => {
 const inventoryGenerator = () => {
   const status = [true, false];
   let record = {};
-  record['in_stock'] = status[Math.floor(Math.random() * 1)];
+  record['in_stock'] = status[Math.floor(Math.random() * status.length)];
   if (record['in_stock']) {
     record['inventory'] = Math.floor(Math.random() * 10000 + 1234);
   } else {
@@ -88,7 +88,7 @@ function dataGenerator() {
 
 const sampleData = dataGenerator()
 
-let url = `http://admin:${config.password}@localhost:5984/overviewdb/_bulk_docs`;
+let url = `http://admin:${config.password}@localhost:5984/overview_db/_bulk_docs`;
 
 let seedingScript = (idx = 1) => {
   let counter = idx;
@@ -96,12 +96,19 @@ let seedingScript = (idx = 1) => {
     docs: []
   };
   for (var i = 0; i < 10000; i++) {
-    bulk.docs.push({product_id: (counter.toString()), sampleData: dataGenerator()});
+    bulk.docs.push({_id: (counter.toString()), product_id: (counter.toString()),  'package_name': faker.commerce.productMaterial(),
+    'product_name': faker.commerce.productName(),
+    'other_sellers': sellerGenerator(),
+    'price': priceGenerator(),
+    'shipping': shippingGenerator(),
+    'inventory': inventoryGenerator(),
+    'form':formGenerator()});
     counter++;
   }
 
 axios.post(url, bulk)
   .then((res) => {
+    console.log('couchDB Seeded 1000000:', res);
     if (counter <= 10000000) {
       bulk.docs = [];
       seedingScript(counter);
