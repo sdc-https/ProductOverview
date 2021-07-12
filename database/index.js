@@ -1,18 +1,14 @@
 const { Client, Pool } = require('pg');
 const client = new Client({
-  // user: 'root',
   host: 'localhost',
   database: 'overview_db',
-  // password: 'password',
   port: 5432,
 })
 
 const pool = new Pool({
-  // user: 'root',
   host: 'localhost',
   database: 'overview_db',
   max: 25,
-  // password: 'password',
   port: 5432,
 })
 
