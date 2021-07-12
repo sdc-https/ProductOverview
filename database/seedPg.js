@@ -1,11 +1,9 @@
 const faker = require('faker');
 const uuid = require('uuid');
-const postgresDb = require('./index.js');
-var fs = require('fs');
-var stringify = require('csv-stringify');
+const db = require('./index.js');
 
 const sellerGenerator = () => {
-  const num = Math.floor(Math.random() * 5);
+  const num = Math.floor(Math.random() * 3 + 1);
   const form = ['DVD', 'Blu-ray', '4K', 'Prime Video']
   const edition = ['Special Edition', "Collector's Edition", "Limited Collector's Edition", 'Special Extended Version', 'Limited Edition', null];
   let sellers = [];
@@ -72,25 +70,47 @@ const formGenerator = () => {
   return record;
 }
 
-function dataGenerator() {
-  let data = [];
-  for (let idx = 0; idx < 10000000; idx++) {
-    let query = []
-    let record = {}
-    record['product_id'] = (idx + 1).toString();
-    record['package_name'] = faker.commerce.productMaterial();
-    record['product_name'] = faker.commerce.productName();
-    record['other_sellers'] = sellerGenerator();
-    record['price'] = priceGenerator();
-    record['shipping'] = shippingGenerator();
-    record['inventory'] = inventoryGenerator();
-    record['form'] = formGenerator();
-    data.push(record);
-  }
-  return data;
-};
 
-const sampleData = dataGenerator()
+let seedOverview= async () => {
+
+  for (let i = 0; i < 10000000; i++) {
+    let product_id = (i + 1).toString();
+    let package_name = faker.commerce.productMaterial();
+    let product_name = faker.commerce.productName();
+    let price = priceGenerator();
+    let shipping = shippingGenerator();
+    let inventory = inventoryGenerator();
+
+      await db.client.query(
+      `insert into overview (product_id, package_name, product_name,list_price, price,in_stock,inventory,prime, sold_by, ships_from) values ('${product_id}', '${package_name}', '${product_name}', ${price.list_price}, ${price.price}, '${inventory.in_stock}', ${inventory.inventory}, '${shipping.prime}', '${shipping.ships_from}', '${shipping.sold_by}');`)
+
+      .catch((error) => {
+        console.log('Error adding records to the database', error)
+      })
+    }
+    console.log('sucessfully addedd overview records to Overview database');
+}
+seedOverview();
+
+
+
+
+let seedForm = async () => {
+  let form = formGenerator();
+  form.forEach(async form => {
+    for (let i = 0; i < 10000000; i++) {
+      let product_id = (i + 1).toString();
+      await db.client.query(
+        `insert into form (product_id, price, form) values (${product_id}, ${form.price}, '${form.form}') ;`)
+        .catch((error) => {
+          console.log('Error adding records to the database', error)
+        })
+    }
+  })
+  console.log('sucessfully addedd form records to Overview database');
+}
+seedForm();
+
 
 function formatDate(date) {
   var hours = date.getHours();
@@ -103,38 +123,26 @@ function formatDate(date) {
   return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
 }
 
-
-const save = (sampleData) => {
-  sampleData.forEach(record => {
-    let query =
-      "BEGIN; " +
-
-      `insert into overview (product_id, package_name, product_name) values (${record.product_id}, '${record.product_name}', '${record.package_name}')  ;` +
-
-      `insert into price (list_price, price, product_id) values (${record.price.list_price}, ${record.price.price}, ${record.product_id}); ` +
-
-      `insert into inventory (in_stock, inventory, product_id) values(${record.inventory.in_stock}, ${record.inventory.inventory}, ${record.product_id}) ;` +
-
-      `insert into shipping (prime, sold_by, ships_from, product_id) values (${record.shipping.prime}, '${record.shipping.ships_from}', '${record.shipping.sold_by}', ${record.product_id}) ; `;
-
-    record.form.forEach(form => {
-      query += `insert into form (price, form, product_id) values (${form.price}, '${form.form}', ${record.product_id}) ;`
-    })
-
-    record.other_sellers.forEach(seller => {
-      query += `insert into seller (seller_id, discs, price, newfrom, usedfrom, edition, form, release_date, product_id) values ('${seller.seller_id}', ${seller.discs}, ${seller.price}, ${seller.newfrom}, ${seller.usedfrom}, '${seller.edition}', '${seller.form}', '${formatDate(seller.release_date)}', ${record.product_id}) ; `
-    })
-
-    query += "COMMIT; ";
-
-    postgresDb.pool.query(query, (err, res) => {
-      console.log(err, res)
-      //postgresDb.pool.end()
-    })
-  })
-};
-
-save(sampleData);
-console.log('done!')
+let seedSeller = async () => {
+let other_sellers = sellerGenerator();
+  other_sellers.forEach(async seller => {
+    for (let i = 0; i < 10000000; i++) {
+      let product_id = (i + 1).toString();
+      await db.client.query(
+        `insert into seller (product_id, seller_id, discs, price, newfrom, usedfrom, edition, form, release_date) values (${product_id}, '${seller.seller_id}', ${seller.discs}, ${seller.price}, ${seller.newfrom}, ${seller.usedfrom}, '${seller.edition}', '${seller.form}', '${formatDate(seller.release_date)}'); `)
+        .catch((error) => {
+          console.log('Error adding records to the database', error)
+        })
+    }
+})
+console.log('sucessfully addedd form records to Overview database');
+}
+seedSeller();
 
 
+// module.exports.dataGenerator = dataGenerator;
+module.exports.sellerGenerator = sellerGenerator;
+module.exports.priceGenerator = priceGenerator;
+module.exports.shippingGenerator = shippingGenerator;
+module.exports.inventoryGenerator = inventoryGenerator;
+module.exports.formGenerator = formGenerator;

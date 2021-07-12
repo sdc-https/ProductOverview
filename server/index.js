@@ -7,7 +7,6 @@ const Promise = require('bluebird');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-
 app.use(shrinkRay());
 app.use(bodyParser.json())
 
@@ -30,7 +29,7 @@ app.get('/overview/:productid', (req, res) => {
       if (!id) {
         throw id;
       }
-      return readOverview(id);
+      return db.readOverview(id);
     })
     .then(records => {
       console.log(records)
@@ -42,41 +41,21 @@ app.get('/overview/:productid', (req, res) => {
     })
 });
 
- async function readOverview(id) {
-  let result = {};
-    overview =  await db.getOverview(id);
-    other_sellers =  await db.getOtherSellers(id);
-    price = await db.getPrice(id);
-    inventory =  await db.getInventory(id);
-    shipping = await db.getShipping(id);
-    form = await db.getForm(id);
-
-    result = {
-      price: price.rows[0],
-      shipping: shipping.rows[0],
-      inventory: inventory.rows[0],
-      product_id: overview.rows[0].product_id,
-      form: form.rows,
-      other_sellers : other_sellers.rows,
-      package_name: overview.rows[0].package_name,
-      product_name : overview.rows[0].product_name,
-    }
-
-    return result;
-  }
-
-app.post('/overview/', (req, res) => {
+app.post('/overview', async (req, res) => {
+  // const { overview} = req.body;
   Promise.resolve(req.body)
-    .then(overview => {
-      return db.saveOverview(overview);
-    })
-    .then(result => {
-      res.send('overview created');
-    })
-    .catch(error => {
-      console.log(error)
-      res.send('An error has occured');
-    })
+  .then(overview => {
+
+    return db.createOverview(overview);
+  })
+  .then(result => {
+    res.send('overview created');
+  })
+  .catch(error => {
+    console.log(error)
+    res.send('An error has occured');
+  })
+
 });
 
 app.put('/overview/:productid', (req, res, next) => {
