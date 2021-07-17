@@ -73,8 +73,8 @@ CREATE DATABASE overview_DB;
 USE overview_DB;
 
 CREATE TABLE Overview (
-  product_id serial,
-  package_name VARCHAR(50) NOT NULL,
+  product_id serial NOT NULL,
+  package_name VARCHAR(100),
   product_name VARCHAR(100) NOT NULL,
   list_price int NOT NULL,
   price int NOT NULL,

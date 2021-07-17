@@ -89,7 +89,27 @@ const updateOverview = (overview) => {
 };
 
 const deleteRecord = (id) => {
-  return pool.query(`DELETE FROM overview WHERE product_id = ${id}`)
+  // return pool.query(`DELETE FROM overview WHERE product_id = ${id}`)
+  return pool.query(`DELETE FROM seller
+  WHERE product_id IN
+        ( SELECT f.product_id
+          FROM form as f
+               JOIN overview as o
+                 ON o.product_id = f.product_id
+          WHERE o.product_id IN (${id})
+        )
+  RETURNING product_id;
+
+  DELETE FROM form
+  WHERE product_id IN
+        ( SELECT product_id
+          FROM overview
+          WHERE  product_id IN (${id})
+        )
+  RETURNING product_id;
+
+  DELETE FROM overview
+  WHERE product_id IN (${id});`)
 };
 
 

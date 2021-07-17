@@ -6,6 +6,7 @@ const path = require('path');
 const Promise = require('bluebird');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
+const cdb = require('./getQueryExecutionTime_Cdb.js');
 
 app.use(shrinkRay());
 app.use(bodyParser.json())
@@ -65,6 +66,7 @@ app.put('/overview/:productid', (req, res, next) => {
     })
     .then(result => {
       res.send('record updated sucessfully');
+      console.log('record updated successfully');
     })
     .catch(error => {
       console.log(error)
