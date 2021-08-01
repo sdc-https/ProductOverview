@@ -1,3 +1,4 @@
+const newrelic = require('newrelic')
 const express = require('express');
 const app = express();
 const shrinkRay = require('shrink-ray-current');
@@ -6,6 +7,7 @@ const path = require('path');
 const Promise = require('bluebird');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
+const cdb = require('./getQueryExecutionTime_Cdb.js');
 
 app.use(shrinkRay());
 app.use(bodyParser.json())
@@ -32,7 +34,6 @@ app.get('/overview/:productid', (req, res) => {
       return db.readOverview(id);
     })
     .then(records => {
-      console.log(records)
       res.json(records);
       //console.log(records);
     })
@@ -52,7 +53,7 @@ app.post('/overview', async (req, res) => {
     res.send('overview created');
   })
   .catch(error => {
-    console.log(error)
+    //console.log(error)
     res.send('An error has occured');
   })
 
@@ -65,6 +66,7 @@ app.put('/overview/:productid', (req, res, next) => {
     })
     .then(result => {
       res.send('record updated sucessfully');
+      console.log('record updated successfully');
     })
     .catch(error => {
       console.log(error)

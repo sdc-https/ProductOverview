@@ -3,3 +3,4 @@ MyFirstKey.pem
 .env
 .dockerignore
 config.js
+newrelic.js

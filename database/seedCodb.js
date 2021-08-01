@@ -105,6 +105,10 @@ let seedingScript = (idx = 1) => {
     'form':formGenerator()});
     counter++;
   }
+  // for (var i = 0; i < 10000; i++) {
+  //   bulk.docs.push({_id: (counter.toString()), data: dataGenerator()});
+  //   counter++;
+  // }
 
 axios.post(url, bulk)
   .then((res) => {
