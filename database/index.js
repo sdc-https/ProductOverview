@@ -1,3 +1,4 @@
+const newrelic = require('newrelic')
 const { Client, Pool } = require('pg');
 const client = new Client({
   host: 'localhost',
@@ -66,7 +67,7 @@ async function readOverview(id) {
 const createOverview = (overviews) => {
   let query =
     "BEGIN; " +
-    `insert into overview (product_id, package_name, product_name,list_price, price,in_stock,inventory,prime, sold_by, ships_from) values (${overviews.product_id}, '${overviews.package_name}', '${overviews.product_name}', ${overviews.price.list_price}, ${overviews.price.price}, '${overviews.inventory.in_stock}', ${overviews.inventory.inventory}, '${overviews.shipping.prime}', '${overviews.shipping.ships_from}', '${overviews.shipping.sold_by}');`;
+    `insert into overview (product_id, package_name, product_name,list_price, price,in_stock,inventory,prime, sold_by, ships_from) values (${overviews.product_id}, '${overviews.package_name}', '${overviews.product_name}', ${overviews.list_price}, ${overviews.price}, '${overviews.in_stock}', ${overviews.inventory}, '${overviews.prime}', '${overviews.ships_from}', '${overviews.sold_by}');`;
 
   overviews.other_sellers.forEach(seller => {
     query += `insert into seller(product_id, seller_id, discs, price, newfrom, usedfrom, edition, form, release_date) values (${overviews.product_id}, '${seller.seller_id}', ${seller.discs}, ${seller.price}, ${seller.newfrom}, ${seller.usedfrom}, '${seller.edition}', '${seller.form}', '${seller.release_date}');`
@@ -78,7 +79,7 @@ const createOverview = (overviews) => {
   query += "COMMIT; ";
 
   pool.query(query, (err, res) => {
-    console.log(err, res)
+    //console.log(err, res)
   })
 };
 
